@@ -279,11 +279,7 @@ public class Client implements ActionListener {
 		while(IP==null) {
 			IP = this.view.askIP();
 		}
-		while(connect()==false) {
-			IP = this.view.reAskIP();
-		}
-
-		
+		connect();
 
 			view.init();
 			view.clearBtn();
@@ -327,15 +323,16 @@ public class Client implements ActionListener {
 		return s;
 	}
 	
-	private boolean connect() {
+	private void connect() {
 		try {
 			server = new Socket(IP,8765);
 			System.out.println("Connected");
-			return true;
+
 		}catch(IOException e) {
 			e.printStackTrace();
 			System.out.println("F");
-			return false;
+			IP = this.view.reAskIP();
+			connect();
 		}
 	}
 	
